@@ -9,7 +9,7 @@ z warunkiem brzegowym 2 rodzaju dla x=0 i trzeciego dla x=g
 do porownania z analitycznymi
 przy czym sciana wykonana z dwoch
 roznych materialow o przewodnosc1 i przewodnosc2'''
-print ss,"\n"
+print(ss,"\n")
 
 #dane:
 g=0.45
@@ -42,101 +42,101 @@ plik=open("wynik","w")
 wspolrzedne_t=[0.0,deltax1/2]
 
 for x in range(1,n1):
-#          wspolrzedne_t[x+1]=wspolrzedne_t[x]+dx
+#   wspolrzedne_t[x+1]=wspolrzedne_t[x]+dx
 	wspolrzedne_t.append(wspolrzedne_t[x]+deltax1) 
-#          plik.write(str(wspolrzedne_t[x]))
+#   plik.write(str(wspolrzedne_t[x]))
 x=len(wspolrzedne_t)-1
-print x
+print(x)
 wspolrzedne_t.append(wspolrzedne_t[x]+deltax1/2)
 x=x+1
 wspolrzedne_t.append(wspolrzedne_t[x]+deltax2/2)
 
 for x in range(nt,n2+n1+1):
 #          wspolrzedne_t[x+1]=wspolrzedne_t[x]+dx
-         wspolrzedne_t.append(wspolrzedne_t[x]+deltax2) 
+	wspolrzedne_t.append(wspolrzedne_t[x]+deltax2) 
 #          plik.write(str(wspolrzedne_t[x]))
 x=len(wspolrzedne_t)-1
-print x
+print(x)
 wspolrzedne_t.append(wspolrzedne_t[x]+deltax2/2)
 
 for x in range(len(wspolrzedne_t)):
-        print wspolrzedne_t[x]
+    print(wspolrzedne_t[x])
 
 
 
 dx=[]
 for x in range(0,len(wspolrzedne_t)-1):
-        dx.append(wspolrzedne_t[x+1]-wspolrzedne_t[x])
-	#plik.write('\n')
+    dx.append(wspolrzedne_t[x+1]-wspolrzedne_t[x])
+    #plik.write('\n')
 
 
 przewodnosc=[]
 for x in wspolrzedne_t:         
-        if round(x,10) < round(g1,10):
-                  przewodnosc.append(przewodnosc1)
-		  
-        else:
-                  przewodnosc.append(przewodnosc2)              
-print "\n"
+    if round(x,10) < round(g1,10):
+        przewodnosc.append(przewodnosc1)
+                
+    else:
+        przewodnosc.append(przewodnosc2)              
+print("\n")
 temp0=[]
 temperatura=[]
 
 
 for x in wspolrzedne_t:
-        temperatura.append(temp_poczatkowa)         
+    temperatura.append(temp_poczatkowa)         
 #          temp1.append(temp_poczatkowa)         
 #
-print 'dx      wspolrzedne     przewodnosc  temperatura'
+print('dx      wspolrzedne     przewodnosc  temperatura')
 for x in range(0,len(wspolrzedne_t)-1):         
-        print dx[x]," ",wspolrzedne_t[x+1]," ",przewodnosc[x+1]," ",temperatura[x+1]
+    print(dx[x]," ",wspolrzedne_t[x+1]," ",przewodnosc[x+1]," ",temperatura[x+1])
         
          
 # print wspolrzedne_t[len(wspolrzedne_t)-1]          
-print "suma dx",sum(dx)                 
+print("suma dx",sum(dx))                 
 # sys.exit()         
-print len(dx)
+print(len(dx))
 # sys.exit()    
 
 
 
 ilosc_geometrii=len(wspolrzedne_t)-1
-print "ilosc w dx",len(dx)-1
-print temperatura
+print("ilosc w dx",len(dx)-1)
+print(temperatura)
 warunek=10.0
 time_begin = time.time()
 while warunek>1e-8:
 # while czas<(dczas*1000):
 #          plik.write(str(czas)+":\n")
-        iteracje=iteracje+1
+    iteracje=iteracje+1
 #temperatura w polowie warstwy 0 -> blisko powierzchni wewnetznej warunek brzegowy q=0
-	temperatura[0]=temperatura[1]+dx[0]*q1/przewodnosc[0]
+    temperatura[0]=temperatura[1]+dx[0]*q1/przewodnosc[0]
 
         
-	for x in range(1,ilosc_geometrii):      
-                  temperatura[x]=(temperatura[x-1]*przewodnosc[x-1]*dx[x]+ \
-		  temperatura[x+1]*przewodnosc[x]*dx[x-1])/ \
-		  (przewodnosc[x-1]*dx[x] + przewodnosc[x]*dx[x-1])
-		  #print wspolrzedne_t[x]
+    for x in range(1,ilosc_geometrii):      
+                temperatura[x]=(temperatura[x-1]*przewodnosc[x-1]*dx[x]+ \
+                temperatura[x+1]*przewodnosc[x]*dx[x-1])/ \
+                (przewodnosc[x-1]*dx[x] + przewodnosc[x]*dx[x-1])
+                #print wspolrzedne_t[x]
 
-          
-	#print ilosc_geometrii," ",wspolrzedne_t[ilosc_geometrii]," ",przewodnosc[ilosc_geometrii]," dx:",dx[ilosc_geometrii-1]
-	
-        temperatura[ilosc_geometrii]=(temperatura[ilosc_geometrii-1]*przewodnosc[ilosc_geometrii-1]/dx[ilosc_geometrii-1]+ alfa2*temp_otoczenia)/(przewodnosc[ilosc_geometrii-1]/dx[ilosc_geometrii-1] + alfa2)
-	#print iteracje
-	#plik.write(str(n+1)+" "+str(temperatura[1][n+1])+"\n")
-        warunek=q1-(temperatura[0]-temperatura[1])*przewodnosc[0]/dx[0]
-	#sys.exit()
+        
+    #print ilosc_geometrii," ",wspolrzedne_t[ilosc_geometrii]," ",przewodnosc[ilosc_geometrii]," dx:",dx[ilosc_geometrii-1]
+    
+    temperatura[ilosc_geometrii]=(temperatura[ilosc_geometrii-1]*przewodnosc[ilosc_geometrii-1]/dx[ilosc_geometrii-1]+ alfa2*temp_otoczenia)/(przewodnosc[ilosc_geometrii-1]/dx[ilosc_geometrii-1] + alfa2)
+    #print iteracje
+    #plik.write(str(n+1)+" "+str(temperatura[1][n+1])+"\n")
+    warunek=q1-(temperatura[0]-temperatura[1])*przewodnosc[0]/dx[0]
+    #sys.exit()
 
 
 	
 for x in range(ilosc_geometrii+1):
-          plik.write(str(wspolrzedne_t[x])+" "+str(temperatura[x])+"\n")
+    plik.write(str(wspolrzedne_t[x])+" "+str(temperatura[x])+"\n")
 # print temperatura
-print "iteracje =",iteracje
+print("iteracje =",iteracje)
 spadek_temp=q1*(g1/przewodnosc1+g2/przewodnosc2+1/alfa2)
 t1=spadek_temp+temp_otoczenia
-print "obliczone temperatury => t1= ",t1
-print "t2 = ",t1-q1*g1/przewodnosc1
+print("obliczone temperatury => t1= ",t1)
+print("t2 = ",t1-q1*g1/przewodnosc1)
 plik.close()
-print "bye\n"
-print "calculation took ",time.time()-time_begin
+print("bye\n")
+print("calculation took ",time.time()-time_begin)
